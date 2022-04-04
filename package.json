@@ -1,12 +1,12 @@
 {
   "name": "wordle-stats",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Discord bot for tracking Wordle statistics.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "ssh 52.11.46.43 'cd wordle-stats; git pull; sudo npm i'"
   },
-  "author": "",
+  "author": "Ezequiel Goldsmith-Morgan",
   "license": "ISC",
   "dependencies": {
     "@discordjs/builders": "^0.12.0",
