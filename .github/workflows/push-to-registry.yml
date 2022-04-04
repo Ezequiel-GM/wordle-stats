@@ -1,7 +1,9 @@
 name: push-to-registry
 
-on: push
-  branch: main
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   push_to_registry:
