@@ -4,7 +4,7 @@
   "description": "A Discord bot for tracking Wordle statistics.",
   "main": "index.js",
   "scripts": {
-    "deploy": "ssh 52.11.46.43 'cd wordle-stats; git pull; sudo npm i'"
+    "deploy": "node deploy-commands.js; ssh 52.11.46.43 'cd wordle-stats; git pull; sudo npm i'"
   },
   "author": "Ezequiel Goldsmith-Morgan",
   "license": "ISC",
