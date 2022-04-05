@@ -36,7 +36,7 @@ module.exports = {
       dataset[i] = totals[i + 1] || 0;
     }
 
-    // Construct QuickChart URL
+    // Construct QuickChart embed
     const chartData = {
       type: 'bar',
       data: {
@@ -47,16 +47,28 @@ module.exports = {
         }]
       },
     };
-    const url = "https://quickchart.io/chart?bkg=white&c=" + encodeURIComponent(JSON.stringify(chartData));
-
-    // Reply with URL embedded image
     const embed = {
       image: {
-        url: url
+        url: "https://quickchart.io/chart?bkg=white&c=" + encodeURIComponent(JSON.stringify(chartData))
       }
     }
+
+    // Calculate solve percentage
+    const totalPuzzles = dataset.reduce((p, c) => p + c, 0);
+    const totalSolved = dataset.slice(0, 6).reduce((p, c) => p + c, 0);
+    const solvePercentage = Math.round(((totalSolved / totalPuzzles * 100) + Number.EPSILON) * 100) / 100;
+
+    // Calculate average guesses
+    const guessesSum = dataset.slice(0, 6).reduce((p, c, i) => p + c * (i + 1), 0);
+    const averageGuesses = Math.round(((guessesSum / totalSolved) + Number.EPSILON) * 100) / 100;
+
+    // Construct stats message
+    const message = `Wordle stats for ${name}:\n` + 
+      `Solved: ${solvePercentage}%, Average: ${averageGuesses}`;
+
     await interaction.editReply({
-      embeds: [embed]
+      content: message,
+      embeds: [embed],
     });
   }
 }
