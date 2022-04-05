@@ -14,10 +14,12 @@ module.exports = {
   async execute(interaction) {
     await interaction.deferReply();
 
-    // Get user ID from options, or use caller ID if not provided
+    // Get user info from options, or use caller ID if not provided
     let userId = interaction.user.id;
+    let name = interaction.member.nick || interaction.member.nickname || interaction.user.username;
     if (interaction.options.getUser('user')) {
       userId = interaction.options.getUser('user').id;
+      name = interaction.options.getUser('user').username;
     }
 
     // Get user snapshot from Firebase database
@@ -35,7 +37,6 @@ module.exports = {
     }
 
     // Construct QuickChart URL
-    const name = interaction.member.nick || interaction.member.nickname || interaction.user.username;
     const chartData = {
       type: 'bar',
       data: {
