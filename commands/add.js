@@ -38,7 +38,10 @@ module.exports = {
 
     await userRef.child(`totals/${guesses}`).transaction(total => (total || 0) + 1);
 
-    if (guesses <= 6) {
+    if (guesses === 1) {
+      await interaction.editReply(`${nickname} solved Wordle #${puzzle} in ${guesses} guess!`);
+    }
+    else if (guesses <= 6) {
       await interaction.editReply(`${nickname} solved Wordle #${puzzle} in ${guesses} guesses!`);
     }
     else {
