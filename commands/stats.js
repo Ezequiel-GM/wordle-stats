@@ -1,3 +1,18 @@
+/**
+ * This command provides the latest Wordle statistics for a given user.
+ * 
+ * Usage: /stats [User]
+ * 
+ * A user can provide another user as a parameter to look up their stats, or
+ * omit the parameter to look up their own.
+ * 
+ * Current statistics include:
+ *   - A solved puzzle percentage
+ *   - An average score for solved puzzles
+ *   - An embedded bar chart that displays all previous scores
+ * 
+ * Charts are generated using the QuickChart API: https://quickchart.io/
+ */
 const axios = require('axios');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { database } = require('../firebase');
@@ -14,7 +29,7 @@ module.exports = {
   async execute(interaction) {
     await interaction.deferReply();
 
-    // Get user info from options, or use caller ID if not provided
+    // Get user info from user option, or use caller ID if not provided
     let userId = interaction.user.id;
     let name = interaction.member.nick || interaction.member.nickname || interaction.user.username;
     if (interaction.options.getUser('user')) {
@@ -66,6 +81,7 @@ module.exports = {
     const message = `Wordle stats for ${name}:\n` + 
       `Solved: ${solvePercentage}%, Average: ${averageGuesses}`;
 
+    // Send stats message with embedded chart
     await interaction.editReply({
       content: message,
       embeds: [embed],

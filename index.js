@@ -8,14 +8,17 @@ client.once('ready', () => {
   console.log("WordleStats bot is running...");
 });
 
+// Collect all .js files from commands directory
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
+// Add commands to client
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
   client.commands.set(command.data.name, command);
 }
 
+// Respond to interactions that match one of the commands
 client.on('interactionCreate', async interaction => {
   if (!interaction.isCommand()) return;
 
