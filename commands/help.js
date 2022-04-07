@@ -9,13 +9,15 @@ module.exports = {
     const helpMessage =
       "Welcome to **WordleStats!**\n" +
       "\n" +
+      "For full documentation, see the [public readme](https://github.com/Ezequiel-GM/wordle-stats/blob/main/README.md).\n" +
+      "\n" +
       "Using this bot, you can track Wordle statistics for members of this server. " +
       "Enter one of the following commands to begin:\n" +
       "\n" +
-      ">>> **/add**  [Puzzle]  [# of Guesses]\n" +
-      "Add a new Wordle result to your statistics.\n" +
+      ">>> **/add**  [puzzle]  [guesses]\n" +
+      "Add a new Wordle score to your statistics.\n" +
       "\n" +
-      "**/stats**  \[User\] \(optional\)\n" +
+      "**/stats**  [user]\n" +
       "Display the latest statistics for you or another member of your server.";
 
     await interaction.reply(helpMessage);
