@@ -2,7 +2,7 @@
  * This command adds a new score to the user's statistics, or updates the score
  * for the provided puzzle if already present.
  * 
- * Usage: /add [Puzzle] [Score]
+ * Usage: /add [Score] [Puzzle]
  * 
  * A user can only update their own scores, so the caller ID is used to identify
  * which stats to update.
@@ -16,10 +16,6 @@ module.exports = {
     .setName('add')
     .setDescription('Add a result to your Wordle stats.')
     .addIntegerOption(option =>
-      option.setName('puzzle')
-      .setDescription('Which Wordle puzzle to add stats for.')
-      .setRequired(true))
-    .addIntegerOption(option =>
       option.setName('guesses')
         .setDescription('How many guesses it took you to solve the Wordle.')
         .addChoice('1', 1)
@@ -29,13 +25,17 @@ module.exports = {
         .addChoice('5', 5)
         .addChoice('6', 6)
         .addChoice('Unsolved', 7)
-        .setRequired(true)),
+        .setRequired(true))
+    .addIntegerOption(option =>
+      option.setName('puzzle')
+        .setDescription('Which Wordle puzzle to add stats for.')
+        .setRequired(false)),
   
   async execute(interaction) {
     await interaction.deferReply();
 
     // Collect command options and user information
-    const puzzle = interaction.options.getInteger('puzzle');
+    const puzzle = interaction.options.getInteger('puzzle') || getTodaysPuzzle();
     const guesses = interaction.options.getInteger('guesses');
     const nickname = interaction.member.nick || interaction.member.nickname || interaction.user.username;
     const userRef = database.ref(`${interaction.guildId}/${interaction.user.id}`);
@@ -61,4 +61,11 @@ module.exports = {
       await interaction.editReply(`${nickname} didn't solve Wordle #${puzzle}. Better luck next time!`);
     }
   }
+}
+
+const getTodaysPuzzle = () => {
+  const DAY_ZERO = Date.UTC(2021, 5, 19);
+  const today = new Date(Date.now());
+  const daysDifference = (today - DAY_ZERO) / (1000 * 60 * 60 * 24);
+  return Math.floor(daysDifference);
 }

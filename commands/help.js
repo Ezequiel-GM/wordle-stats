@@ -14,7 +14,7 @@ module.exports = {
       "Using this bot, you can track Wordle statistics for members of this server. " +
       "Enter one of the following commands to begin:\n" +
       "\n" +
-      ">>> **/add**  [puzzle]  [guesses]\n" +
+      ">>> **/add**  [guesses]  [puzzle]\n" +
       "Add a new Wordle score to your statistics.\n" +
       "\n" +
       "**/stats**  [user]\n" +

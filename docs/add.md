@@ -4,13 +4,13 @@ provided a score for the given puzzle.
 
 ## Command
 
-### `/add [puzzle] [guesses]`
+### `/add [guesses] [puzzle]`
 
 ## Options
 | Option | Type | Required | Description |
 | --- | --- | --- | --- |
-| puzzle | integer | Yes | The unique puzzle number to add a score to. |
 | guesses | multiple choice | Yes | The number of guesses it took you to solve the Wordle, or "Unsolved" if you did not solve it. |
+| puzzle | integer | No | The unique puzzle number to add a score to. Today's puzzle is used if none is provided. |
 
 ## Example Usage
 
